@@ -1,9 +1,9 @@
 pipeline {
     agent any
-        
+
     tools {
-	    maven 'Maven 3.8.6'
-	}
+        maven 'Maven 3.8.6'
+    }
 
     stages {
         stage('Checkout') {
@@ -15,14 +15,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building fat JAR...'
-                sh 'mvn clean compile assembly:single'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'mvn test'
+                sh 'mvn -B test'
             }
         }
 
