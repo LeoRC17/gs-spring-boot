@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Public repo, no credentials required
                 git branch: 'master',
-                    url: 'git@github.com:LeoRC17/gs-spring-boot.git',
-                    credentialsId: '0249666d-2801-4e5f-833d-9dafbebba9d1'
+                    url: 'https://github.com/LeoRC17/gs-spring-boot.git'
             }
         }
 
@@ -31,6 +31,15 @@ pipeline {
         stage('Archive') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying JAR to Nexus...'
+                withCredentials([usernamePassword(credentialsId: 'nexus-cred', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                    sh 'mvn -B deploy'
+                }
             }
         }
     }
