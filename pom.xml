@@ -42,8 +42,12 @@
         </plugins>
     </build>
 
-    <!-- NEW: Nexus deployment configuration -->
+    <!-- Nexus deployment configuration -->
     <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://nexus:8081/repository/maven-releases/</url>
+        </repository>
         <snapshotRepository>
             <id>nexus</id>
             <url>http://nexus:8081/repository/maven-snapshots/</url>
