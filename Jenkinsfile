@@ -36,11 +36,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying JAR to Nexus...'
+                echo 'Deploying JAR to Nexus (snapshots)...'
                 withCredentials([usernamePassword(credentialsId: 'nexus-cred', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
                     sh """
                         mvn -B deploy \
-                        -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/ \
+                        -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-snapshots/ \
                         -Dnexus.username=$NEXUS_USER \
                         -Dnexus.password=$NEXUS_PASS
                     """
