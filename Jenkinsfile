@@ -33,8 +33,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Maven will use distributionManagement + settings.xml
-                sh 'mvn -B deploy'
+                configFileProvider([configFile(fileId: 'nexus-settings', variable: 'MAVEN_SETTINGS')]) {
+                    sh "mvn -B deploy -s $MAVEN_SETTINGS"
+                }
             }
         }
     }
