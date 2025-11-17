@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Public repo, no credentials required
                 git branch: 'master',
                     url: 'https://github.com/LeoRC17/gs-spring-boot.git'
             }
@@ -16,14 +15,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building fat JAR...'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
                 sh 'mvn -B test'
             }
         }
@@ -36,8 +33,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying JAR to Nexus (snapshots)...'
-                // No need for credentials here — Maven uses settings.xml
+                // Maven will use distributionManagement + settings.xml
                 sh 'mvn -B deploy'
             }
         }
