@@ -8,7 +8,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/LeoRC17/gs-spring-boot.git', branch: 'master'
+                git branch: 'master',
+                    url: 'git@github.com:LeoRC17/gs-spring-boot.git',
+                    credentialsId: '0249666d-2801-4e5f-833d-9dafbebba9d1'
             }
         }
 
@@ -33,4 +35,3 @@ pipeline {
         }
     }
 }
-
